@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'home_screen.dart';
+import 'registry_information_screen.dart';
+
 class PinCodeScreen extends StatefulWidget {
   @override
   _PinCodeScreenState createState() => _PinCodeScreenState();
@@ -20,8 +23,10 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
         // Логика проверки пин-кода
         if (enteredPin.join() == "1234") {
           // Правильный пин-код
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Вход выполнен!')),
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => RegistryInformationScreen(),
+            ),
           );
         } else {
           // Неправильный пин-код
@@ -97,7 +102,7 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
 
           // Ссылка "Не пам’ятаю код"
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 40),
             child: GestureDetector(
               onTap: () {
                 // Логика для восстановления кода
@@ -108,9 +113,8 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
               child: Text(
                 'Не пам’ятаю код для входу',
                 style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                  color: Colors.black54,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -124,7 +128,6 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
   Widget buildNumberPad() {
     return Column(
       children: [
-        // Цифры от 1 до 9
         for (var i = 0; i < 3; i++)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -136,18 +139,47 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Отпечаток пальца (заглушка)
-            buildIconButton(Icons.fingerprint, onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('Использование отпечатка пальца')),
-              );
-            }),
+            IconButton(
+                style: IconButton.styleFrom(
+                  shape: CircleBorder(),
+                  foregroundColor: Colors.white,
+                  iconSize: 58,
+                  padding: EdgeInsets.all(0),
+                ),
+                onPressed: () {},
+                icon: Icon(Icons.fingerprint_sharp)),
+
             // Кнопка 0
-            buildNumberButton('0'),
-            // Кнопка удаления
-            buildIconButton(Icons.backspace,
-                onPressed: onDeletePressed),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 28),
+                child: buildNumberButton('0')),
+
+            // Кнопка удаление
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                // Цвет фона кнопки
+                borderRadius: BorderRadius.circular(12),
+                // Закругление углов
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: IconButton(
+                onPressed: () => onDeletePressed(),
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.black,
+                  size: 24,
+                ),
+              ),
+            ),
           ],
         ),
       ],
@@ -169,22 +201,6 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
             style:
                 TextStyle(fontSize: 38, fontWeight: FontWeight.w500),
           ),
-        ),
-      ),
-    );
-  }
-
-  // Кнопка с иконкой
-  Widget buildIconButton(IconData icon,
-      {required VoidCallback onPressed}) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: GestureDetector(
-        onTap: onPressed,
-        child: CircleAvatar(
-          radius: 40,
-          backgroundColor: Colors.white,
-          child: Icon(icon, size: 28),
         ),
       ),
     );
