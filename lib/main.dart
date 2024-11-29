@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reserv_plus/screens/main_screen/main_screen.dart';
 
-import 'screens/delete.dart';
-import 'screens/load_screen.dart';
-import 'widgets/container_all_info_widget.dart';
 
 void main() {
   runApp(const MyApp());

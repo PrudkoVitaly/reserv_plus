@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 
+import '../../widgets/modal_container_widget.dart';
+import '../modal_person_info.dart';
 import 'main_widgets/container_all_Info.dart';
 
 class MainScreen extends StatefulWidget {
@@ -147,8 +149,7 @@ class _MainScreenState extends State<MainScreen>
                             child: Image.asset(
                               "images/res_plus.png",
                               width: 23,
-                              color: const Color.fromRGBO(
-                                  253, 135, 12, 1),
+                              color: const Color.fromRGBO(253, 135, 12, 1),
                             ),
                           ),
                         ],
@@ -178,28 +179,25 @@ class _MainScreenState extends State<MainScreen>
                       animation: _controller,
                       builder: (context, child) {
                         // Угол поворота (по оси Y)
-                        final angle = _rotationAnimation.value *
-                            3.1415926535897932;
+                        final angle =
+                            _rotationAnimation.value * 3.1415926535897932;
 
                         // Проверка, какая сторона должна быть видна
-                        final isFrontVisible =
-                            angle <= 3.1415926535897932 / 2;
+                        final isFrontVisible = angle <= 3.1415926535897932 / 2;
 
                         return Transform(
                           alignment: Alignment.center,
                           transform: Matrix4.identity()
-                            ..setEntry(
-                                3, 2, 0.001) // Добавление перспективы
+                            ..setEntry(3, 2, 0.001) // Добавление перспективы
                             ..rotateY(angle), // Вращение по оси Y
                           child: Transform.scale(
-                            scale: _scaleAnimation
-                                .value, // Сжатие перед сменой
+                            scale: _scaleAnimation.value, // Сжатие перед сменой
                             child: isFrontVisible
                                 ? _buildFrontContainer()
                                 : Transform(
                                     alignment: Alignment.center,
-                                    transform: Matrix4.rotationY(
-                                        3.1415926535897932),
+                                    transform:
+                                        Matrix4.rotationY(3.1415926535897932),
                                     child: _buildBackContainer(),
                                   ),
                           ),
@@ -225,7 +223,7 @@ class _MainScreenState extends State<MainScreen>
             AnimatedPositioned(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
-              bottom: _isContainerVisible ? 10 : -400,
+              bottom: _isContainerVisible ? 25 : -400,
               // Контейнер едет снизу
               left: 0,
               right: 0,
@@ -242,59 +240,48 @@ class _MainScreenState extends State<MainScreen>
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: GestureDetector(
-                    onTap: () {
-                      _toggleContainer();
-                      Future.delayed(
-                          const Duration(milliseconds: 1000), () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) => Container(
-                                color: Colors.white,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        height: 50,
-                                        width: 50,
-                                        child: const Text("Show")),
-                                  ],
-                                )));
-                      });
-                    },
-                    // Container all info
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 5,
-                          width: 45,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 5,
+                        width: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        const SizedBox(height: 30),
-                        const ContainerAllInfo(
+                      ),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                        onTap: () {
+                          _toggleContainer();
+                          Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                                ShowPersonInfoArguments.showPersonInfoModal(context);
+
+                          });
+                        },
+                        child: const ContainerAllInfo(
                           icon: Icons.info_outline,
                           title: "Повна інформація",
                         ),
-                        const SizedBox(height: 20),
-                        const ContainerAllInfo(
-                          icon: Icons.file_copy_outlined,
-                          title: "Завантажити PDF",
-                        ),
-                        const SizedBox(height: 20),
-                        const ContainerAllInfo(
-                          icon: Icons.update,
-                          title: "Оновити документ",
-                        ),
-                        const SizedBox(height: 20),
-                        const ContainerAllInfo(
-                          icon: Icons.perm_device_info_rounded,
-                          title: "Виправити дані онлайн",
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 20),
+                      const ContainerAllInfo(
+                        icon: Icons.file_copy_outlined,
+                        title: "Завантажити PDF",
+                      ),
+                      const SizedBox(height: 20),
+                      const ContainerAllInfo(
+                        icon: Icons.update,
+                        title: "Оновити документ",
+                      ),
+                      const SizedBox(height: 20),
+                      const ContainerAllInfo(
+                        icon: Icons.perm_device_info_rounded,
+                        title: "Виправити дані онлайн",
+                      ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
                 ),
               ),
@@ -303,6 +290,9 @@ class _MainScreenState extends State<MainScreen>
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: _isContainerVisible
+            ? Color.fromRGBO(106, 105, 94, 1)
+            : Colors.white,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -316,19 +306,15 @@ class _MainScreenState extends State<MainScreen>
                 Icon(
                   Icons.work_outline,
                   size: 24,
-                  color:
-                      _currentIndex == 0 ? Colors.black : Colors.grey,
+                  color: _currentIndex == 0 ? Colors.black : Colors.grey,
                 ),
                 Text(
                   "Вакансії",
                   style: TextStyle(
                     fontSize: 14,
-                    color: _currentIndex == 0
-                        ? Colors.black
-                        : Colors.grey,
-                    fontWeight: _currentIndex == 0
-                        ? FontWeight.w500
-                        : FontWeight.w400,
+                    color: _currentIndex == 0 ? Colors.black : Colors.grey,
+                    fontWeight:
+                        _currentIndex == 0 ? FontWeight.w500 : FontWeight.w400,
                   ),
                 ),
               ],
@@ -341,19 +327,15 @@ class _MainScreenState extends State<MainScreen>
                 Icon(
                   Icons.insert_drive_file_outlined,
                   size: 24,
-                  color:
-                      _currentIndex == 1 ? Colors.black : Colors.grey,
+                  color: _currentIndex == 1 ? Colors.black : Colors.grey,
                 ),
                 Text(
                   "Мій документ",
                   style: TextStyle(
                     fontSize: 14,
-                    color: _currentIndex == 1
-                        ? Colors.black
-                        : Colors.grey,
-                    fontWeight: _currentIndex == 1
-                        ? FontWeight.w500
-                        : FontWeight.w400,
+                    color: _currentIndex == 1 ? Colors.black : Colors.grey,
+                    fontWeight:
+                        _currentIndex == 1 ? FontWeight.w500 : FontWeight.w400,
                   ),
                 ),
               ],
@@ -369,17 +351,13 @@ class _MainScreenState extends State<MainScreen>
                     Icon(
                       Icons.menu,
                       size: 24,
-                      color: _currentIndex == 2
-                          ? Colors.black
-                          : Colors.grey,
+                      color: _currentIndex == 2 ? Colors.black : Colors.grey,
                     ),
                     Text(
                       "Меню",
                       style: TextStyle(
                         fontSize: 14,
-                        color: _currentIndex == 2
-                            ? Colors.black
-                            : Colors.grey,
+                        color: _currentIndex == 2 ? Colors.black : Colors.grey,
                         fontWeight: _currentIndex == 2
                             ? FontWeight.w500
                             : FontWeight.w400,
@@ -444,12 +422,13 @@ class _MainScreenState extends State<MainScreen>
                       width: 60,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image:
-                              AssetImage("images/logo_invert.webp"),
+                          // image: AssetImage("images/logo_invert.webp"),
+                          image: AssetImage("images/logo_main_screen.jpg"),
+
                           colorFilter: ColorFilter.mode(
-                            Color.fromRGBO(212, 210, 189, 1),
-                            BlendMode.darken,
-                          ),
+                              Color.fromRGBO(212, 210, 189, 1),
+                              // BlendMode.darken,
+                              BlendMode.difference),
                         ),
                       ),
                     ),
@@ -509,12 +488,11 @@ class _MainScreenState extends State<MainScreen>
               color: Color.fromRGBO(150, 148, 134, 1),
             ),
             child: Marquee(
-              text:
-                  'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
-              style: const TextStyle(
+              text: 'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Color.fromRGBO(252, 251, 246, 1),
               ),
               scrollAxis: Axis.horizontal,
               // Прокрутка по горизонтали
@@ -528,8 +506,7 @@ class _MainScreenState extends State<MainScreen>
           ),
           const SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -549,19 +526,19 @@ class _MainScreenState extends State<MainScreen>
                     SizedBox(height: 10),
                     Text(
                       textAlign: TextAlign.start,
-                      "Марченко\nМикола\nВолодимирович",
+                      "Марченко \nМикола\nВолодимирович",
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.w500,
                         height: 1.0,
                       ),
                     ),
+
                   ],
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        const Color.fromRGBO(253, 135, 12, 1),
+                    backgroundColor: const Color.fromRGBO(253, 135, 12, 1),
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(10),
                   ),
