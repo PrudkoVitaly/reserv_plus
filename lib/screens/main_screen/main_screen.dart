@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 
+import 'main_widgets/container_all_Info.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -211,7 +213,7 @@ class _MainScreenState extends State<MainScreen>
             // Затемняющий фон
             if (_isContainerVisible)
               AnimatedOpacity(
-                duration: Duration(milliseconds: 900),
+                duration: const Duration(milliseconds: 900),
                 opacity: 0.5,
                 child: Container(
                   color: Colors.black,
@@ -221,26 +223,30 @@ class _MainScreenState extends State<MainScreen>
               ),
             // Анимация для контейнера
             AnimatedPositioned(
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
-              bottom: _isContainerVisible ? 200 : -400,
+              bottom: _isContainerVisible ? 10 : -400,
               // Контейнер едет снизу
               left: 0,
               right: 0,
               child: AnimatedScale(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
                 scale: _isContainerVisible
                     ? 1.0
                     : 1.0, // Контейнер немного сжимается при скрытии
                 child: Container(
-                  color: Colors.blue,
-                  padding: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: GestureDetector(
                     onTap: () {
                       _toggleContainer();
-                      Future.delayed(Duration(milliseconds: 1000),
-                          () {
+                      Future.delayed(
+                          const Duration(milliseconds: 1000), () {
                         showModalBottomSheet(
                             context: context,
                             builder: (context) => Container(
@@ -250,15 +256,44 @@ class _MainScreenState extends State<MainScreen>
                                     Container(
                                         height: 50,
                                         width: 50,
-                                        child: Text("Show")),
+                                        child: const Text("Show")),
                                   ],
                                 )));
                       });
                     },
-                    child: Text(
-                      'Контейнер с текстом!',
-                      style: TextStyle(
-                          color: Colors.white, fontSize: 24),
+                    // Container all info
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 5,
+                          width: 45,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        const ContainerAllInfo(
+                          icon: Icons.info_outline,
+                          title: "Повна інформація",
+                        ),
+                        const SizedBox(height: 20),
+                        const ContainerAllInfo(
+                          icon: Icons.file_copy_outlined,
+                          title: "Завантажити PDF",
+                        ),
+                        const SizedBox(height: 20),
+                        const ContainerAllInfo(
+                          icon: Icons.update,
+                          title: "Оновити документ",
+                        ),
+                        const SizedBox(height: 20),
+                        const ContainerAllInfo(
+                          icon: Icons.perm_device_info_rounded,
+                          title: "Виправити дані онлайн",
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     ),
                   ),
                 ),

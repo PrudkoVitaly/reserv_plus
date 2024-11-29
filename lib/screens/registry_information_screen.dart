@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:reserv_plus/screens/main_screen.dart';
+import 'package:reserv_plus/screens/main_screen/main_screen.dart';
 
 class RegistryInformationScreen extends StatefulWidget {
   const RegistryInformationScreen({super.key});
