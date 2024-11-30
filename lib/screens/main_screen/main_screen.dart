@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/data_provider.dart';
 import '../../widgets/modal_container_widget.dart';
 import '../modal_person_info.dart';
 import 'main_widgets/container_all_Info.dart';
@@ -108,6 +110,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(226, 223, 204, 1),
       body: GestureDetector(
@@ -118,99 +121,104 @@ class _MainScreenState extends State<MainScreen>
         },
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 60),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Container(
-                            child: const Text(
-                              "Резерв",
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                // height: 1,
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Stack(
+                          clipBehavior: Clip.none,
+
+                          children: [
+                            Container(
+                              child: const Text(
+                                "Резерв",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  // height: 1,
+                                ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: 6,
-                            right: -22,
-                            child: Image.asset(
-                              "images/res_plus.png",
-                              width: 23,
-                              color: const Color.fromRGBO(253, 135, 12, 1),
+                            Positioned(
+                              top: 6,
+                              right: -20,
+                              child: Image.asset(
+                                "images/res_plus.png",
+                                width: 20,
+                                color: const Color.fromRGBO(253, 135, 12, 1),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      const Text(
-                        "Сканувати \nдокумент",
-                        style: TextStyle(
-                          height: 1,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
+                          ],
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(width: 6),
-                      Image.asset(
-                        "images/qr.png",
-                        width: 50,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  // Військово-обліковий документ
-                  GestureDetector(
-                    onTap: _flipCard,
-                    child: AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, child) {
-                        // Угол поворота (по оси Y)
-                        final angle =
-                            _rotationAnimation.value * 3.1415926535897932;
-
-                        // Проверка, какая сторона должна быть видна
-                        final isFrontVisible = angle <= 3.1415926535897932 / 2;
-
-                        return Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.identity()
-                            ..setEntry(3, 2, 0.001) // Добавление перспективы
-                            ..rotateY(angle), // Вращение по оси Y
-                          child: Transform.scale(
-                            scale: _scaleAnimation.value, // Сжатие перед сменой
-                            child: isFrontVisible
-                                ? _buildFrontContainer()
-                                : Transform(
-                                    alignment: Alignment.center,
-                                    transform:
-                                        Matrix4.rotationY(3.1415926535897932),
-                                    child: _buildBackContainer(),
-                                  ),
+                        const Spacer(),
+                        const Text(
+                          "Сканувати \nдокумент",
+                          style: TextStyle(
+                            height: 1,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
-                        );
-                      },
+                          textAlign: TextAlign.left,
+                        ),
+                        const SizedBox(width: 6),
+                        Image.asset(
+                          "images/qr.png",
+                          width: 30,
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 30),
+                    // Військово-обліковий документ
+                    GestureDetector(
+                      onTap: _flipCard,
+                      child: AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) {
+                          // Угол поворота (по оси Y)
+                          final angle =
+                              _rotationAnimation.value * 3.1415926535897932;
+
+                          // Проверка, какая сторона должна быть видна
+                          final isFrontVisible = angle <= 3.1415926535897932 / 2;
+
+                          return Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()
+                              ..setEntry(3, 2, 0.001) // Добавление перспективы
+                              ..rotateY(angle), // Вращение по оси Y
+                            child: Transform.scale(
+                              scale: _scaleAnimation.value, // Сжатие перед сменой
+                              child: isFrontVisible
+                                  ? _buildFrontContainer()
+                                  : Transform(
+                                      alignment: Alignment.center,
+                                      transform:
+                                          Matrix4.rotationY(3.1415926535897932),
+                                      child: _buildBackContainer(),
+                                    ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             // Затемняющий фон
             if (_isContainerVisible)
               AnimatedOpacity(
+                alwaysIncludeSemantics: true,
                 duration: const Duration(milliseconds: 900),
                 opacity: 0.5,
                 child: Container(
@@ -221,9 +229,10 @@ class _MainScreenState extends State<MainScreen>
               ),
             // Анимация для контейнера
             AnimatedPositioned(
+
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
-              bottom: _isContainerVisible ? 25 : -400,
+              bottom: _isContainerVisible ? -5 : -400,
               // Контейнер едет снизу
               left: 0,
               right: 0,
@@ -271,9 +280,16 @@ class _MainScreenState extends State<MainScreen>
                         title: "Завантажити PDF",
                       ),
                       const SizedBox(height: 20),
-                      const ContainerAllInfo(
-                        icon: Icons.update,
-                        title: "Оновити документ",
+                      GestureDetector(
+                        onTap:  () {
+                          Provider.of<DateProvider>(context, listen: false).updateDate();
+
+                          _toggleContainer();
+                        },
+                        child: const ContainerAllInfo(
+                          icon: Icons.update,
+                          title: "Оновити документ",
+                        ),
                       ),
                       const SizedBox(height: 20),
                       const ContainerAllInfo(
@@ -385,9 +401,10 @@ class _MainScreenState extends State<MainScreen>
   }
 
   Widget _buildFrontContainer() {
+    Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      height: 590,
+      height: size.height * 0.71,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
@@ -411,15 +428,15 @@ class _MainScreenState extends State<MainScreen>
                       textAlign: TextAlign.center,
                       "Військово\n-обліковий\nдокумент",
                       style: TextStyle(
-                        fontSize: 38,
+                        fontSize: 32,
                         fontWeight: FontWeight.w500,
                         height: 1.0,
                       ),
                     ),
                     const Spacer(),
                     Container(
-                      height: 60,
-                      width: 60,
+                      height: 50,
+                      width: 50,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           // image: AssetImage("images/logo_invert.webp"),
@@ -439,13 +456,13 @@ class _MainScreenState extends State<MainScreen>
                   children: [
                     Image.asset(
                       "images/ok_icon.png",
-                      width: 20,
+                      width: 18,
                     ),
                     const SizedBox(width: 10),
                     const Text(
                       "Дані уточнено вчасно",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                         height: 1.1,
                       ),
@@ -469,8 +486,8 @@ class _MainScreenState extends State<MainScreen>
                 const Text(
                   "13.11.1987",
                   style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
                     height: 1.1,
                     wordSpacing: 0.1,
                     letterSpacing: 0.1,
@@ -479,32 +496,53 @@ class _MainScreenState extends State<MainScreen>
               ],
             ),
           ),
-          const SizedBox(height: 90),
+          // const SizedBox(height: 90),
+          SizedBox(height:  size.height * 0.15),
           Container(
             width: double.infinity,
-            height: 50,
+            height: 40,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: Color.fromRGBO(150, 148, 134, 1),
             ),
-            child: Marquee(
-              text: 'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            child: Consumer<DateProvider>(
+              builder: (context, dateProvider, child) {
+                return   Marquee(
+                text: 'Виключено - Документ оновлений 0 ${dateProvider.currentDate.hour}:${dateProvider.currentDate.minute}:${dateProvider.currentDate.second} | ${dateProvider.currentDate.day}.${dateProvider.currentDate.month}.${dateProvider.currentDate.year}',
+                style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
                 color: Color.fromRGBO(252, 251, 246, 1),
-              ),
-              scrollAxis: Axis.horizontal,
-              // Прокрутка по горизонтали
-              crossAxisAlignment: CrossAxisAlignment.center,
-              blankSpace: 50.0,
-              // Пробел между концом и началом текста
-              velocity: 40.0,
-              // Скорость прокрутки текста
-              startPadding: 10.0, // Отступ перед началом текста
+                ),
+                scrollAxis: Axis.horizontal,
+                // Прокрутка по горизонтали
+                crossAxisAlignment: CrossAxisAlignment.center,
+                blankSpace: 50.0,
+                // Пробел между концом и началом текста
+                velocity: 40.0,
+                // Скорость прокрутки текста
+                startPadding: 10.0, // Отступ перед началом текста
+                );
+              }
+              // child: Marquee(
+              //   text: 'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
+              //   style: TextStyle(
+              //     fontSize: 16,
+              //     fontWeight: FontWeight.w500,
+              //     color: Color.fromRGBO(252, 251, 246, 1),
+              //   ),
+              //   scrollAxis: Axis.horizontal,
+              //   // Прокрутка по горизонтали
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   blankSpace: 50.0,
+              //   // Пробел между концом и началом текста
+              //   velocity: 40.0,
+              //   // Скорость прокрутки текста
+              //   startPadding: 10.0, // Отступ перед началом текста
+              // ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Row(
@@ -526,9 +564,9 @@ class _MainScreenState extends State<MainScreen>
                     SizedBox(height: 10),
                     Text(
                       textAlign: TextAlign.start,
-                      "Марченко \nМикола\nВолодимирович",
+                      "МАРЧЕНКО\nМикола\nВолодимирович",
                       style: TextStyle(
-                        fontSize: 34,
+                        fontSize: 28,
                         fontWeight: FontWeight.w500,
                         height: 1.0,
                       ),
@@ -540,14 +578,14 @@ class _MainScreenState extends State<MainScreen>
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(253, 135, 12, 1),
                     shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                   ),
                   onPressed: () {
                     _toggleContainer();
                   },
                   child: Image.asset(
                     "images/three_dots.png",
-                    width: 30,
+                    width: 28,
                   ),
                 ),
               ],
@@ -559,9 +597,10 @@ class _MainScreenState extends State<MainScreen>
   }
 
   Widget _buildBackContainer() {
+    Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      height: 590,
+      height: size.height * 0.7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
@@ -583,10 +622,10 @@ class _MainScreenState extends State<MainScreen>
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
             Image.asset(
               "images/qr_code.png",
-              width: 280,
+              width: 260,
             )
           ],
         ),

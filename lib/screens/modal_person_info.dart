@@ -35,10 +35,10 @@ class ShowPersonInfoArguments {
                         ),
                         child: Column(
                           children: [
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: 50, left: 30, right: 30, bottom: 30),
+                                  top: 50, left: 30, right: 30, bottom: 20),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -47,15 +47,15 @@ class ShowPersonInfoArguments {
                                     textAlign: TextAlign.left,
                                     "Військово-\nобліковий\nдокумент",
                                     style: TextStyle(
-                                      fontSize: 38,
+                                      fontSize: 32,
                                       fontWeight: FontWeight.w500,
-                                      height: 1.0,
+                                      height: 0.9,
                                     ),
                                   ),
                                   const Spacer(),
                                   Container(
-                                    height: 60,
-                                    width: 60,
+                                    height: 50,
+                                    width: 50,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         // image: AssetImage("images/logo_invert.webp"),
@@ -74,17 +74,16 @@ class ShowPersonInfoArguments {
                             ),
                             Container(
                               width: double.infinity,
-                              height: 50,
+                              height: 40,
                               alignment: Alignment.center,
                               decoration: const BoxDecoration(
                                 color: Color.fromRGBO(150, 148, 134, 1),
                               ),
                               child: Marquee(
-                                text:
-                                    'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                text: 'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
                                   color: Color.fromRGBO(252, 251, 246, 1),
                                 ),
                                 scrollAxis: Axis.horizontal,
@@ -94,8 +93,7 @@ class ShowPersonInfoArguments {
                                 // Пробел между концом и началом текста
                                 velocity: 40.0,
                                 // Скорость прокрутки текста
-                                startPadding:
-                                    10.0, // Отступ перед началом текста
+                                startPadding: 10.0, // Отступ перед началом текста
                               ),
                             ),
                             Padding(
@@ -120,10 +118,11 @@ class ShowPersonInfoArguments {
                                                 "МАРЧЕНКО Микола Володимирович",
                                                 style: TextStyle(
                                                   fontSize: 24,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1,
                                                 ),
                                               ),
-                                              SizedBox(height: 20),
+                                              SizedBox(height: 10),
                                               Text(
                                                 "Виключено",
                                                 style: TextStyle(
@@ -141,7 +140,7 @@ class ShowPersonInfoArguments {
                                               Color.fromRGBO(234, 235, 228, 1),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(20),
+                                          padding: EdgeInsets.only( left: 20, right: 20, bottom: 20, top: 10),
                                           child: Column(
                                             children: [
                                               Row(
@@ -200,7 +199,7 @@ class ShowPersonInfoArguments {
                                     child: const Text(
                                       "Підстава зняття чи виключення:\nнепридатні",
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
@@ -242,7 +241,7 @@ class ShowPersonInfoArguments {
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            SizedBox(width: 125),
+                                            SizedBox(width: 25),
                                             Text(
                                               "27.11.2025",
                                               style: TextStyle(
@@ -530,7 +529,7 @@ class ShowPersonInfoArguments {
                   ),
                   // Элемент гребенка, который остается видимым
                   Positioned(
-                    top: 30,
+                    top: 20,
                     // можно отрегулировать в зависимости от вашего дизайна
                     left: MediaQuery.of(context).size.width / 2 - 25,
                     // центровка по горизонтали
