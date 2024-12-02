@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/data_provider.dart';
 
 class ShowPersonInfoArguments {
+
   static void showPersonInfoModal(BuildContext context) {
+
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -16,7 +21,9 @@ class ShowPersonInfoArguments {
             maxChildSize: 0.93, // максимальная высота
             expand: false,
             builder: (context, scrollController) {
+              final dateProvider = Provider.of<DateProvider>(context);
               return Stack(
+
 
                 children: [
                   ClipRRect(
@@ -80,7 +87,7 @@ class ShowPersonInfoArguments {
                                 color: Color.fromRGBO(150, 148, 134, 1),
                               ),
                               child: Marquee(
-                                text: 'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
+                                text: "Виключено - Документ оновлений О ${dateProvider.currentDate}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,

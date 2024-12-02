@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
+import 'package:reserv_plus/screens/request_sent_load_screen/request_sent_load_screen.dart';
 
 import '../../provider/data_provider.dart';
 import '../../widgets/modal_container_widget.dart';
@@ -110,6 +111,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    final dateProvider = Provider.of<DateProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(226, 223, 204, 1),
@@ -281,8 +283,14 @@ class _MainScreenState extends State<MainScreen>
                       ),
                       const SizedBox(height: 20),
                       GestureDetector(
-                        onTap:  () {
-                          Provider.of<DateProvider>(context, listen: false).updateDate();
+                        onTap:  ()  {
+
+                          // Provider.of<DateProvider>(context, listen: false).updateDate();
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => RequestSentLoadScreen()));
+                          Future.delayed(const Duration(milliseconds: 1000), () {
+                            dateProvider.updateDate();
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                          });
 
                           _toggleContainer();
                         },
@@ -307,7 +315,7 @@ class _MainScreenState extends State<MainScreen>
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: _isContainerVisible
-            ? Color.fromRGBO(106, 105, 94, 1)
+            ? const Color.fromRGBO(106, 105, 94, 1)
             : Colors.white,
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -401,6 +409,7 @@ class _MainScreenState extends State<MainScreen>
   }
 
   Widget _buildFrontContainer() {
+    final dateProvider = Provider.of<DateProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
@@ -505,41 +514,22 @@ class _MainScreenState extends State<MainScreen>
             decoration: const BoxDecoration(
               color: Color.fromRGBO(150, 148, 134, 1),
             ),
-            child: Consumer<DateProvider>(
-              builder: (context, dateProvider, child) {
-                return   Marquee(
-                text: 'Виключено - Документ оновлений 0 ${dateProvider.currentDate.hour}:${dateProvider.currentDate.minute}:${dateProvider.currentDate.second} | ${dateProvider.currentDate.day}.${dateProvider.currentDate.month}.${dateProvider.currentDate.year}',
-                style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Color.fromRGBO(252, 251, 246, 1),
-                ),
-                scrollAxis: Axis.horizontal,
-                // Прокрутка по горизонтали
-                crossAxisAlignment: CrossAxisAlignment.center,
-                blankSpace: 50.0,
-                // Пробел между концом и началом текста
-                velocity: 40.0,
-                // Скорость прокрутки текста
-                startPadding: 10.0, // Отступ перед началом текста
-                );
-              }
-              // child: Marquee(
-              //   text: 'Виключено - Документ оновлений 0 14:06 | 07.11.2024',
-              //   style: TextStyle(
-              //     fontSize: 16,
-              //     fontWeight: FontWeight.w500,
-              //     color: Color.fromRGBO(252, 251, 246, 1),
-              //   ),
-              //   scrollAxis: Axis.horizontal,
-              //   // Прокрутка по горизонтали
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   blankSpace: 50.0,
-              //   // Пробел между концом и началом текста
-              //   velocity: 40.0,
-              //   // Скорость прокрутки текста
-              //   startPadding: 10.0, // Отступ перед началом текста
-              // ),
+            child: Marquee(
+            // text: 'Виключено - Документ оновлений 0 ${dateProvider.currentDate.hour}:${dateProvider.currentDate.minute}:${dateProvider.currentDate.second} | ${dateProvider.currentDate.day}.${dateProvider.currentDate.month}.${dateProvider.currentDate.year}',
+            text: "Виключено - Документ оновлений О ${dateProvider.currentDate}",
+              style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Color.fromRGBO(252, 251, 246, 1),
+            ),
+            scrollAxis: Axis.horizontal,
+            // Прокрутка по горизонтали
+            crossAxisAlignment: CrossAxisAlignment.center,
+            blankSpace: 50.0,
+            // Пробел между концом и началом текста
+            velocity: 40.0,
+            // Скорость прокрутки текста
+            startPadding: 10.0, // Отступ перед началом текста
             ),
           ),
           const SizedBox(height: 10),

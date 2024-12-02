@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:reserv_plus/provider/data_provider.dart';
 import 'package:reserv_plus/screens/load_screen.dart';
-import 'package:reserv_plus/screens/main_screen/main_screen.dart';
-
-import 'delete.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual,
+    overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom], // Включаем обе панели
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => DateProvider(),
@@ -20,6 +23,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -27,8 +34,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainScreen(),
-      // home: HomeScreen3(),
+      // home: MainScreen(),
+      home: LoadScreen(),
     );
   }
 }

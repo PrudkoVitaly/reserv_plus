@@ -55,6 +55,7 @@ class _RegistryInformationScreenState
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(226, 223, 204, 1),
       body: Padding(
@@ -89,7 +90,7 @@ class _RegistryInformationScreenState
             // const SizedBox(height: 0),
             Container(
               width: double.infinity,
-              height: 580,
+              height: size.height * 0.71,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
