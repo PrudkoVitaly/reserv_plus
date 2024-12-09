@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// class DateProvider extends ChangeNotifier {
-//   DateTime _currentDate = DateTime.now();
-//
-//   DateTime get currentDate => _currentDate;
-//
-//   void updateDate() {
-//     _currentDate = DateTime.now();
-//     notifyListeners();
-//   }
-// }
-
 class DateProvider extends ChangeNotifier {
   String _currentDate = 'Не обновлено';
 
@@ -40,5 +29,7 @@ class DateProvider extends ChangeNotifier {
     await prefs.setString('savedDate', newDate); // Сохраняем дату
     notifyListeners(); // Уведомляем об изменении
   }
+
+
 }
 
