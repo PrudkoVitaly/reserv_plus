@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:marquee/marquee.dart';
-import 'package:provider/provider.dart';
-import 'package:reserv_plus/screens/request_sent_load_screen/request_sent_load_screen.dart';
-import 'package:reserv_plus/screens/vacancies_screen/vacancies_screen.dart';
-
-import '../../provider/data_provider.dart';
-import '../../widgets/modal_container_widget.dart';
+// import 'package:reserv_plus/screens/vacancies_screen/vacancies_screen.dart';
 import '../default_main_screen/default_main_scree.dart';
 import '../menu_screen/menu_screen.dart';
-import '../modal_person_info.dart';
-import 'main_widgets/container_all_Info.dart';
-import 'package:page_transition/page_transition.dart';
+import '../vacancies_screen/vacancies_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -44,10 +36,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         duration: Duration(milliseconds: 300), // Плавный переход
         child: _screens[_selectedIndex],  // Отображаем текущую страницу
       ),
-      // body: IndexedStack(
-      //   index: _selectedIndex,
-      //   children: _screens,
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: _isContainerVisible
             ? const Color.fromRGBO(106, 105, 94, 1)

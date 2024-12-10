@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:reserv_plus/screens/menu_screen/update_date_screen.dart';
+
+import '../../provider/data_provider.dart';
+import '../load_anim_screen.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -6,6 +12,7 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final dateProvider = Provider.of<DateProvider>(context);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(226, 223, 204, 1),
       body: Padding(
@@ -14,7 +21,7 @@ class MenuScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: size.height * 0.03),
-            Text(
+            const Text(
               "Вітаемо,\nМикола",
               style: TextStyle(
                 height: 1.1,
@@ -23,26 +30,64 @@ class MenuScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            buildMenuItem(
-                const Icon(Icons.notifications_outlined), "Оповіщення"),
-            buildMenuItem(const Icon(Icons.question_answer_outlined),
-                "питання та відповіді"),
-            buildMenuItem(const Icon(Icons.sms_failed_outlined),
-                "Виправити дані онлайн"),
-            buildMenuItem(const Icon(Icons.settings), "Налаштування"),
-            buildMenuItem(const Icon(Icons.exit_to_app), "Вийти"),
+            GestureDetector(
+              onTap: () async {
+                await dateProvider.updateDate();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UpdateDateScreen()));
+              },
+              child: buildMenuItem(
+                  const Icon(Icons.notifications_outlined), "Оповіщення"),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoadAnimScreen()));
+              },
+              child: buildMenuItem(const Icon(Icons.question_answer_outlined),
+                  "Питання та відповіді"),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoadAnimScreen()));
+              },
+              child: buildMenuItem(const Icon(Icons.sms_failed_outlined),
+                  "Виправити дані онлайн"),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoadAnimScreen()));
+              },
+              child: buildMenuItem(const Icon(Icons.settings), "Налаштування"),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoadAnimScreen()));
+              },
+              child: buildMenuItem(const Icon(Icons.exit_to_app), "Вийти"),
+            ),
             SizedBox(height: size.height * 0.03),
             Divider(
               color: Colors.grey[400],
               thickness: 1.0,
             ),
             SizedBox(height: size.height * 0.03),
-            Text(
+            const Text(
               "Копіювати номер пристою",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             SizedBox(height: size.height * 0.02),
-            Text(
+            const Text(
               "Служба підтримки",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
@@ -57,11 +102,11 @@ class MenuScreen extends StatelessWidget {
       height: 50,
       child: Row(
         children: [
-         Icon(icon.icon, size: 26),
+          Icon(icon.icon, size: 26),
           const SizedBox(width: 15),
           Text(
             title,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ],
       ),

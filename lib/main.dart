@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:reserv_plus/provider/bottom_nav_bar_provider.dart';
 import 'package:reserv_plus/provider/data_provider.dart';
 import 'package:reserv_plus/screens/load_screen.dart';
+import 'package:reserv_plus/screens/main_screen/main_screen.dart';
 
+import 'main_screen_delete.dart';
 import 'screens/vacancies_screen/vacancies_screen.dart';
 
 void main() {
@@ -22,12 +24,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => DateProvider()),
         ChangeNotifierProvider(create: (_) => BottomNavBarProvider()),
       ],
-      child: const MyApp(),
+      child:  const MyApp(),
     ),
-    // ChangeNotifierProvider(
-    //   create: (context) => DateProvider(),
-    //   child: MyApp(),
-    // ),
   );
 }
 
@@ -47,8 +45,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoadScreen(),
-      // home: VacanciesScreen(),
+      // home: MainScreenDelete(),
+      // home: MainScreen(),
+      initialRoute: "/",
+      routes:  {
+        '/': (context) => const LoadScreen(),
+        '/mainScreen': (context) => const MainScreen(),
+        '/vacanciesScreen': (context) => const VacanciesScreen(),
+      },
     );
   }
 }

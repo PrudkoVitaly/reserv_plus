@@ -63,19 +63,41 @@ class _RegistryInformationScreenState
             const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         child: Column(
           children: [
+            const SizedBox(height: 50),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset(
-                  "images/reserve_logo.png",
-                  width: 150,
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      child: const Text(
+                        "Резерв",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          // height: 1,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 6,
+                      right: -20,
+                      child: Image.asset(
+                        "images/res_plus.png",
+                        width: 20,
+                        color: const Color.fromRGBO(253, 135, 12, 1),
+                      ),
+                    ),
+                  ],
                 ),
                 const Spacer(),
                 const Text(
                   "Сканувати \nдокумент",
                   style: TextStyle(
                     height: 1,
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.left,
@@ -83,10 +105,11 @@ class _RegistryInformationScreenState
                 const SizedBox(width: 6),
                 Image.asset(
                   "images/qr.png",
-                  width: 50,
+                  width: 30,
                 ),
               ],
             ),
+            const SizedBox(height: 30),
             // const SizedBox(height: 0),
             Container(
               width: double.infinity,

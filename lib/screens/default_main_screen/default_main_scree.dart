@@ -15,7 +15,8 @@ class DefaultMainScree extends StatefulWidget {
   State<DefaultMainScree> createState() => _DefaultMainScreeState();
 }
 
-class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerProviderStateMixin {
+class _DefaultMainScreeState extends State<DefaultMainScree>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _rotationAnimation;
   late Animation<double> _scaleAnimation;
@@ -109,7 +110,6 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
                       children: [
                         Stack(
                           clipBehavior: Clip.none,
-
                           children: [
                             Container(
                               child: const Text(
@@ -161,7 +161,8 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
                               _rotationAnimation.value * 3.1415926535897932;
 
                           // Проверка, какая сторона должна быть видна
-                          final isFrontVisible = angle <= 3.1415926535897932 / 2;
+                          final isFrontVisible =
+                              angle <= 3.1415926535897932 / 2;
 
                           return Transform(
                             alignment: Alignment.center,
@@ -169,15 +170,16 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
                               ..setEntry(3, 2, 0.001) // Добавление перспективы
                               ..rotateY(angle), // Вращение по оси Y
                             child: Transform.scale(
-                              scale: _scaleAnimation.value, // Сжатие перед сменой
+                              scale: _scaleAnimation.value,
+                              // Сжатие перед сменой
                               child: isFrontVisible
                                   ? _buildFrontContainer()
                                   : Transform(
-                                alignment: Alignment.center,
-                                transform:
-                                Matrix4.rotationY(3.1415926535897932),
-                                child: _buildBackContainer(),
-                              ),
+                                      alignment: Alignment.center,
+                                      transform:
+                                          Matrix4.rotationY(3.1415926535897932),
+                                      child: _buildBackContainer(),
+                                    ),
                             ),
                           );
                         },
@@ -201,7 +203,6 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
               ),
             // Анимация для контейнера
             AnimatedPositioned(
-
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
               bottom: _isContainerVisible ? -5 : -400,
@@ -236,10 +237,10 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
                         onTap: () {
                           _toggleContainer();
                           Future.delayed(const Duration(milliseconds: 1000),
-                                  () {
-                                ShowPersonInfoArguments.showPersonInfoModal(context);
-
-                              });
+                              () {
+                            ShowPersonInfoArguments.showPersonInfoModal(
+                                context);
+                          });
                         },
                         child: const ContainerAllInfo(
                           icon: Icons.info_outline,
@@ -253,13 +254,20 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
                       ),
                       const SizedBox(height: 20),
                       GestureDetector(
-                        onTap:  ()  {
-
+                        onTap: () {
                           // Provider.of<DateProvider>(context, listen: false).updateDate();
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => RequestSentLoadScreen()));
-                          Future.delayed(const Duration(milliseconds: 1000), () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      RequestSentLoadScreen()));
+                          Future.delayed(const Duration(milliseconds: 1000),
+                              () {
                             dateProvider.updateDate();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MainScreen()));
                           });
 
                           _toggleContainer();
@@ -384,7 +392,7 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
             ),
           ),
           // const SizedBox(height: 90),
-          SizedBox(height:  size.height * 0.15),
+          SizedBox(height: size.height * 0.15),
           Container(
             width: double.infinity,
             height: 40,
@@ -394,7 +402,8 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
             ),
             child: Marquee(
               // text: 'Виключено - Документ оновлений 0 ${dateProvider.currentDate.hour}:${dateProvider.currentDate.minute}:${dateProvider.currentDate.second} | ${dateProvider.currentDate.day}.${dateProvider.currentDate.month}.${dateProvider.currentDate.year}',
-              text: "Виключено - Документ оновлений О ${dateProvider.currentDate}",
+              text:
+                  "Виключено - Документ оновлений о ${dateProvider.currentDate}",
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -439,7 +448,6 @@ class _DefaultMainScreeState extends State<DefaultMainScree> with SingleTickerPr
                         height: 1.0,
                       ),
                     ),
-
                   ],
                 ),
                 ElevatedButton(

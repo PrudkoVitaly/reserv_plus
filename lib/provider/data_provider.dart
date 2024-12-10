@@ -17,7 +17,7 @@ class DateProvider extends ChangeNotifier {
     if (savedDate != null) {
       _currentDate = savedDate; // Если есть сохраненная дата, используем её
     }
-    notifyListeners(); // Уведомляем об изменении
+    // notifyListeners(); // Уведомляем об изменении
   }
 
   Future<void> updateDate() async {
