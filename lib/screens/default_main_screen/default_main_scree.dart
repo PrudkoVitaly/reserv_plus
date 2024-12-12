@@ -441,7 +441,7 @@ class _DefaultMainScreeState extends State<DefaultMainScree>
                     SizedBox(height: 10),
                     Text(
                       textAlign: TextAlign.start,
-                      "МАРЧЕНКО\nМикола\nВолодимирович",
+                      "ПРУДКО\nВалентин\nВіталійович",
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w500,

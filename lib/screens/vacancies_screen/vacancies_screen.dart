@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:reserv_plus/screens/vacancies_screen/support_service.dart';
-
-import '../../provider/bottom_nav_bar_provider.dart';
-import '../../question_screen_delete.dart';
+import '../../widgets/circle_progress_indicator.dart';
+import '../load_anim_screen.dart';
 
 class VacanciesScreen extends StatefulWidget {
   const VacanciesScreen({super.key});
@@ -51,14 +49,12 @@ class _VacanciesScreenState extends State<VacanciesScreen> {
               ),
             ),
             SizedBox(height: size.height * 0.02),
-            const Text(
-              "Вакансії",
+            const Text("Вакансії",
                 style: TextStyle(
                   height: 1.1,
                   fontSize: 28,
                   fontWeight: FontWeight.w500,
-                )
-            ),
+                )),
             SizedBox(height: size.height * 0.02),
             const Text(
               "Тут знаходяться актуальні посади\nдля служби в українському\nвійську, надані у співпраці з\nплатформою Lobby X.",
@@ -116,7 +112,15 @@ class _VacanciesScreenState extends State<VacanciesScreen> {
                 minimumSize: const Size(double.infinity, 60),
                 elevation: 0,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CircleProgressIndicator(
+                    ),
+                  ),
+                );
+              },
               child: Text(
                 "Почати",
                 style: TextStyle(

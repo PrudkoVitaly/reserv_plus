@@ -122,7 +122,8 @@ class ShowPersonInfoArguments {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "МАРЧЕНКО Микола Володимирович",
+                                                textAlign: TextAlign.left,
+                                                "ПРУДКО Валентин Віталійович",
                                                 style: TextStyle(
                                                   fontSize: 24,
                                                   fontWeight: FontWeight.w500,
@@ -422,7 +423,7 @@ class ShowPersonInfoArguments {
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          "+38 050 563 4517",
+                                          "+38 095 928 7058",
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500),
@@ -436,7 +437,7 @@ class ShowPersonInfoArguments {
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          "MARCHENKO@gmail.com",
+                                          "PRUDKOVALENTIN@gmail.com",
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500),
